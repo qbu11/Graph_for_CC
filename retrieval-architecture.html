@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息检索架构</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+        .description {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏗️ 信息检索架构</h1>
+        <div class="description">
+            <strong>多源数据整合</strong> - 支持5大数据源（申请表、创业营、OH1记录、方法论、案例库），4种检索引擎（Glob、Grep、Read、MCP），10个并行检索组，确保信息的完整性和时效性。所有检索在Stage 3并行执行，最大化性能。
+        </div>
+        <div class="mermaid">
+graph LR
+    subgraph "数据源层"
+        A1[申请表<br/>基础信息]
+        A2[创业营<br/>项目详情]
+        A3[OH1记录<br/>会议纪要]
+        A4[方法论<br/>框架知识]
+        A5[案例库<br/>成功经验]
+    end
+
+    subgraph "检索引擎"
+        B1[Glob<br/>文件定位]
+        B2[Grep<br/>内容搜索]
+        B3[Read<br/>文档读取]
+        B4[MCP<br/>实时数据]
+    end
+
+    subgraph "并行处理"
+        C1[基础信息<br/>检索组1-2]
+        C2[问题证据<br/>检索组3-6]
+        C3[GOH评估<br/>检索组7-10]
+    end
+
+    A1 --> B1
+    A2 --> B2
+    A3 --> B3
+    A4 --> B4
+    A5 --> B4
+
+    B1 --> C1
+    B2 --> C2
+    B3 --> C3
+    B4 --> C1
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#2d3748',
+                primaryBorderColor: '#4a5568',
+                lineColor: '#667eea',
+                secondaryColor: '#f7fafc',
+                tertiaryColor: '#e2e8f0'
+            }
+        });
+    </script>
+</body>
+</html>

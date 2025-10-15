@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统架构总览图</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 1400px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 CC for MP创始人问题分析系统 - 架构总览</h1>
+        <div class="mermaid">
+graph TB
+    subgraph "输入层 Input Layer"
+        A1[问题分析模式<br/>项目名 + 创始人问题]
+        A2[GOH作业3评估模式<br/>项目名 + GOH作业3评估]
+    end
+
+    subgraph "6阶段思维链 COT Pipeline"
+        B1[Stage 1<br/>意图识别与问题拆解<br/>🔍 5W2H分析<br/>📋 原子问题拆解]
+        B2[Stage 2<br/>智能框架映射<br/>🎯 7框架智能匹配<br/>⚖️ 动态权重调整]
+        B3[Stage 3<br/>统一信息检索<br/>⚡ 并行执行<br/>📊 多源数据整合]
+        B4[Stage 4<br/>分析构建<br/>🧠 OH1+QI会议分析<br/>📈 深层原因分析]
+        B5[Stage 5<br/>智能输出生成<br/>📝 3角度建议<br/>✅ 可执行路径]
+        B6[Stage 6<br/>报告文档保存<br/>💾 自动存档<br/>📄 MD格式]
+    end
+
+    subgraph "信息层级结构 Information Hierarchy"
+        C1[申请表<br/>Apply]
+        C2[创业营项目<br/>Incubation]
+        C3[OH1/QI会议记录<br/>Meeting Records]
+        C4[顶层方法论<br/>Frameworks]
+        C5[历史案例<br/>Cases]
+    end
+
+    subgraph "7大分析框架 Analysis Frameworks"
+        D1[产品PMF]
+        D2[融资]
+        D3[团队]
+        D4[GTM市场]
+        D5[技术架构]
+        D6[运营管理]
+        D7[财务法务]
+    end
+
+    subgraph "工具集成层 Tool Integration"
+        E1[MCP实时数据<br/>🔄 get_company_info<br/>🔄 get_company_tasks]
+        E2[文件检索<br/>📁 Glob/Grep/Read<br/>⚡ 并行执行]
+        E3[WebFetch<br/>🌐 实时信息获取]
+    end
+
+    subgraph "输出层 Output Layer"
+        F1[问题分析输出<br/>📍 OH1会议总结<br/>🎙️ QI核心意见<br/>📋 3角度建议选择]
+        F2[GOH作业3评估输出<br/>📊 自评分析<br/>🎯 路演目标评估<br/>📈 进展追踪判断]
+        F3[自动存档<br/>📄 MD文档<br/>🕐 时间戳命名]
+    end
+
+    %% 连接线
+    A1 --> B1
+    A2 --> B1
+    B1 --> B2
+    B2 --> B3
+    B3 --> B4
+    B4 --> B5
+    B5 --> B6
+
+    B2 -.-> D1
+    B2 -.-> D2
+    B2 -.-> D3
+    B2 -.-> D4
+    B2 -.-> D5
+    B2 -.-> D6
+    B2 -.-> D7
+
+    B3 --> E1
+    B3 --> E2
+    B3 --> E3
+
+    E2 --> C1
+    E2 --> C2
+    E2 --> C3
+    E2 --> C4
+    E2 --> C5
+
+    B5 --> F1
+    B5 --> F2
+    B6 --> F3
+
+    %% 样式
+    classDef inputBox fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef stageBox fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef dataBox fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef frameworkBox fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef toolBox fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef outputBox fill:#e0f2f1,stroke:#004d40,stroke-width:2px
+
+    class A1,A2 inputBox
+    class B1,B2,B3,B4,B5,B6 stageBox
+    class C1,C2,C3,C4,C5 dataBox
+    class D1,D2,D3,D4,D5,D6,D7 frameworkBox
+    class E1,E2,E3 toolBox
+    class F1,F2,F3 outputBox
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#2d3748',
+                primaryBorderColor: '#4a5568',
+                lineColor: '#667eea',
+                secondaryColor: '#f7fafc',
+                tertiaryColor: '#e2e8f0'
+            }
+        });
+    </script>
+</body>
+</html>

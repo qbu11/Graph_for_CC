@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC for MP - AI Agent架构展示系统</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <!-- 加载动画 -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">🚀</div>
+            <div class="loading-text">CC for MP AI Agent</div>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- 主导航栏 -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-icon">🚀</span>
+                <span class="brand-text">CC for MP AI Agent</span>
+            </div>
+
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active" data-target="home">
+                    <i data-feather="home"></i>
+                    <span>概览</span>
+                </a>
+                <a href="#architecture" class="nav-link" data-target="architecture">
+                    <i data-feather="layers"></i>
+                    <span>系统架构</span>
+                </a>
+                <a href="#performance" class="nav-link" data-target="performance">
+                    <i data-feather="zap"></i>
+                    <span>性能优化</span>
+                </a>
+                <a href="#algorithm" class="nav-link" data-target="algorithm">
+                    <i data-feather="cpu"></i>
+                    <span>智能算法</span>
+                </a>
+                <a href="#retrieval" class="nav-link" data-target="retrieval">
+                    <i data-feather="database"></i>
+                    <span>检索架构</span>
+                </a>
+                <a href="#metrics" class="nav-link" data-target="metrics">
+                    <i data-feather="bar-chart-2"></i>
+                    <span>核心指标</span>
+                </a>
+                <a href="#value" class="nav-link" data-target="value">
+                    <i data-feather="dollar-sign"></i>
+                    <span>商业价值</span>
+                </a>
+            </div>
+
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 首页 -->
+        <section id="home" class="section active">
+            <div class="hero-section">
+                <div class="hero-background"></div>
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="gradient-text">CC for MP</span>
+                        <br>创始人问题分析系统
+                    </h1>
+                    <p class="hero-subtitle">
+                        基于6阶段思维链的智能创业导师AI Agent<br>
+                        为创始人提供结构化问题分析和精准决策支持
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">&lt;30秒</div>
+                            <div class="stat-label">响应时间</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">证据支撑</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">7大</div>
+                            <div class="stat-label">分析框架</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">6阶段</div>
+                            <div class="stat-label">思维链</div>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="navigateToSection('architecture')">
+                            <i data-feather="layers"></i>
+                            查看系统架构
+                        </button>
+                        <button class="btn btn-outline" onclick="navigateToSection('value')">
+                            <i data-feather="trending-up"></i>
+                            了解商业价值
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 快速导航卡片 -->
+            <div class="quick-nav-section">
+                <div class="container">
+                    <h2 class="section-title">系统特色</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card" onclick="navigateToSection('architecture')">
+                            <div class="feature-icon">🏗️</div>
+                            <h3>6阶段思维链</h3>
+                            <p>线性推理流程，确保分析质量和逻辑完整性</p>
+                            <div class="feature-arrow">→</div>
+                        </div>
+                        <div class="feature-card" onclick="navigateToSection('performance')">
+                            <div class="feature-icon">⚡</div>
+                            <h3>极致性能</h3>
+                            <p>并行检索优化，30秒内完成复杂问题分析</p>
+                            <div class="feature-arrow">→</div>
+                        </div>
+                        <div class="feature-card" onclick="navigateToSection('algorithm')">
+                            <div class="feature-icon">🧠</div>
+                            <h3>智能匹配</h3>
+                            <p>动态权重调整，自动匹配最佳分析框架</p>
+                            <div class="feature-arrow">→</div>
+                        </div>
+                        <div class="feature-card" onclick="navigateToSection('retrieval')">
+                            <div class="feature-icon">📊</div>
+                            <h3>多源整合</h3>
+                            <p>5大数据源，10个检索组并行处理</p>
+                            <div class="feature-arrow">→</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 系统架构 -->
+        <section id="architecture" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">🏗️ 系统架构总览</h2>
+                    <p class="section-subtitle">6阶段思维链驱动的智能分析系统</p>
+                </div>
+
+                <div class="architecture-description">
+                    <div class="description-card">
+                        <h3>核心设计理念</h3>
+                        <p><strong>智能创业导师AI Agent</strong> - 为MiraclePlus创始人提供结构化问题分析和精准决策支持。采用6阶段思维链(COT)驱动，支持问题分析和GOH作业3评估双模式，确保每个建议都有具体证据支撑。</p>
+                    </div>
+                </div>
+
+                <div class="mermaid-container">
+                    <div class="mermaid" id="architectureDiagram">
+                        <!-- 架构图将在这里渲染 -->
+                    </div>
+                </div>
+
+                <div class="architecture-features">
+                    <div class="feature-row">
+                        <div class="feature-item">
+                            <div class="feature-number">01</div>
+                            <div class="feature-content">
+                                <h4>输入层</h4>
+                                <p>支持问题分析和GOH作业3评估两种模式</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-number">02</div>
+                            <div class="feature-content">
+                                <h4>6阶段思维链</h4>
+                                <p>意图识别 → 框架映射 → 信息检索 → 分析构建 → 输出生成 → 文档保存</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-number">03</div>
+                            <div class="feature-content">
+                                <h4>7大分析框架</h4>
+                                <p>产品PMF、融资、团队、GTM市场、技术架构、运营管理、财务法务</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 性能优化 -->
+        <section id="performance" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">⚡ 性能优化设计</h2>
+                    <p class="section-subtitle">6阶段并行优化，30秒极致响应</p>
+                </div>
+
+                <div class="performance-description">
+                    <div class="description-card">
+                        <h3>极致性能优化</h3>
+                        <p><strong>并行执行策略</strong> - 6阶段线性执行，总响应时间控制在30秒内。Stage 3的并行检索是性能关键，占用50%的总时间，但通过15个检索任务并行执行来最大化效率。</p>
+                    </div>
+                </div>
+
+                <div class="mermaid-container">
+                    <div class="mermaid" id="performanceDiagram">
+                        <!-- 性能时序图将在这里渲染 -->
+                    </div>
+                </div>
+
+                <div class="performance-metrics">
+                    <div class="metric-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon">🚀</div>
+                            <div class="metric-value">5秒</div>
+                            <div class="metric-label">意图识别</div>
+                            <div class="metric-description">5W2H分析 + 原子问题拆解</div>
+                        </div>
+                        <div class="metric-card highlight">
+                            <div class="metric-icon">⚡</div>
+                            <div class="metric-value">15秒</div>
+                            <div class="metric-label">并行检索</div>
+                            <div class="metric-description">15个检索任务同时执行</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">🧠</div>
+                            <div class="metric-value">5秒</div>
+                            <div class="metric-label">分析构建</div>
+                            <div class="metric-description">OH1+QI会议分析</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">📝</div>
+                            <div class="metric-value">5秒</div>
+                            <div class="metric-label">输出生成</div>
+                            <div class="metric-description">3角度建议 + 执行路径</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 智能算法 -->
+        <section id="algorithm" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">🧠 智能框架映射算法</h2>
+                    <p class="section-subtitle">动态权重调整，智能匹配最佳分析框架</p>
+                </div>
+
+                <div class="algorithm-description">
+                    <div class="description-card">
+                        <h3>动态权重调整算法</h3>
+                        <p><strong>智能决策机制</strong> - 基于关键词权重、项目阶段和紧急度的智能评分，支持单框架、主辅框架、平衡分析等多种匹配模式。算法能够自动处理边界情况，确保每个问题都能得到合适的分析框架。</p>
+                    </div>
+                </div>
+
+                <div class="mermaid-container">
+                    <div class="mermaid" id="algorithmDiagram">
+                        <!-- 算法流程图将在这里渲染 -->
+                    </div>
+                </div>
+
+                <div class="algorithm-features">
+                    <div class="algorithm-grid">
+                        <div class="algorithm-card">
+                            <h4>🎯 关键词匹配</h4>
+                            <p>7大框架关键词库，支持核心词、功能词、指标词的加权匹配</p>
+                        </div>
+                        <div class="algorithm-card">
+                            <h4>📈 阶段识别</h4>
+                            <p>自动识别项目阶段（0-1、1-10、10-100），动态调整框架权重</p>
+                        </div>
+                        <div class="algorithm-card">
+                            <h4>🚨 紧急度评估</h4>
+                            <p>P0危机、P1重要、P2一般，三级紧急度自动识别和权重修正</p>
+                        </div>
+                        <div class="algorithm-card">
+                            <h4>🔄 边界处理</h4>
+                            <p>完善的无匹配、多框架竞争等边界情况处理逻辑</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 检索架构 -->
+        <section id="retrieval" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">🏗️ 信息检索架构</h2>
+                    <p class="section-subtitle">多源数据整合，并行处理优化</p>
+                </div>
+
+                <div class="retrieval-description">
+                    <div class="description-card">
+                        <h3>多源数据整合</h3>
+                        <p><strong>并行检索优化</strong> - 支持5大数据源（申请表、创业营、OH1记录、方法论、案例库），4种检索引擎（Glob、Grep、Read、MCP），10个并行检索组，确保信息的完整性和时效性。所有检索在Stage 3并行执行，最大化性能。</p>
+                    </div>
+                </div>
+
+                <div class="mermaid-container">
+                    <div class="mermaid" id="retrievalDiagram">
+                        <!-- 检索架构图将在这里渲染 -->
+                    </div>
+                </div>
+
+                <div class="retrieval-stats">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📁</div>
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">数据源</div>
+                            <div class="stat-detail">申请表、创业营、OH1记录、方法论、案例库</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🔍</div>
+                            <div class="stat-number">4</div>
+                            <div class="stat-label">检索引擎</div>
+                            <div class="stat-detail">Glob文件定位、Grep内容搜索、Read文档读取、MCP实时数据</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⚡</div>
+                            <div class="stat-number">10</div>
+                            <div class="stat-label">并行检索组</div>
+                            <div class="stat-detail">基础信息、问题证据、GOH评估等分组并行处理</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 核心指标 -->
+        <section id="metrics" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">📊 核心价值指标</h2>
+                    <p class="section-subtitle">量化系统性能，确保服务质量</p>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card-large performance-metric">
+                        <div class="metric-header">
+                            <div class="metric-icon">⚡</div>
+                            <h3>性能指标</h3>
+                        </div>
+                        <div class="metric-value">&lt;30秒</div>
+                        <div class="metric-label">响应时间</div>
+                        <div class="metric-progress">
+                            <div class="progress-bar" style="width: 95%"></div>
+                        </div>
+                        <div class="metric-detail">6阶段优化，并行处理</div>
+                    </div>
+
+                    <div class="metric-card-large quality-metric">
+                        <div class="metric-header">
+                            <div class="metric-icon">✅</div>
+                            <h3>质量指标</h3>
+                        </div>
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">证据支撑率</div>
+                        <div class="metric-progress">
+                            <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                        <div class="metric-detail">每个建议都有具体证据</div>
+                    </div>
+
+                    <div class="metric-card-large completeness-metric">
+                        <div class="metric-header">
+                            <div class="metric-icon">📋</div>
+                            <h3>完整性指标</h3>
+                        </div>
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">原子问题覆盖</div>
+                        <div class="metric-progress">
+                            <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                        <div class="metric-detail">全面问题拆解分析</div>
+                    </div>
+
+                    <div class="metric-card-large automation-metric">
+                        <div class="metric-header">
+                            <div class="metric-icon">💾</div>
+                            <h3>自动化指标</h3>
+                        </div>
+                        <div class="metric-value">&gt;95%</div>
+                        <div class="metric-label">存档成功率</div>
+                        <div class="metric-progress">
+                            <div class="progress-bar" style="width: 96%"></div>
+                        </div>
+                        <div class="metric-detail">智能文档管理</div>
+                    </div>
+                </div>
+
+                <div class="execution-standards">
+                    <h3>可执行性标准</h3>
+                    <div class="standards-grid">
+                        <div class="standard-item">
+                            <div class="standard-icon">⏰</div>
+                            <div class="standard-content">
+                                <h4>时间节点</h4>
+                                <p>每个建议包含明确的执行时间表</p>
+                            </div>
+                        </div>
+                        <div class="standard-item">
+                            <div class="standard-icon">💰</div>
+                            <div class="standard-content">
+                                <h4>资源配置</h4>
+                                <p>明确所需的人力、资金和技术资源</p>
+                            </div>
+                        </div>
+                        <div class="standard-item">
+                            <div class="standard-icon">🎯</div>
+                            <div class="standard-content">
+                                <h4>验证标准</h4>
+                                <p>提供可量化的成功验证指标</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 商业价值 -->
+        <section id="value" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">💼 商业价值分析</h2>
+                    <p class="section-subtitle">赋能创始人，规模化辅导</p>
+                </div>
+
+                <div class="value-sections">
+                    <!-- 对创始人价值 -->
+                    <div class="value-section">
+                        <h3 class="value-title">
+                            <span class="value-icon">🚀</span>
+                            对创始人价值
+                        </h3>
+                        <div class="value-grid">
+                            <div class="value-card">
+                                <div class="value-card-icon">⚡</div>
+                                <h4>决策提速</h4>
+                                <p>30秒获得结构化分析，替代数小时的独立思考</p>
+                                <div class="value-impact">效率提升 <strong>10x</strong></div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-card-icon">🔍</div>
+                                <h4>盲点识别</h4>
+                                <p>AI发现人类思维盲区，提供多角度建议</p>
+                                <div class="value-impact">决策质量 <strong>+40%</strong></div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-card-icon">📚</div>
+                                <h4>历史积累</h4>
+                                <p>自动记录决策路径，形成企业知识资产</p>
+                                <div class="value-impact">知识沉淀 <strong>100%</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 对MiraclePlus价值 -->
+                    <div class="value-section">
+                        <h3 class="value-title">
+                            <span class="value-icon">🏢</span>
+                            对MiraclePlus价值
+                        </h3>
+                        <div class="value-grid">
+                            <div class="value-card">
+                                <div class="value-card-icon">📈</div>
+                                <h4>规模化辅导</h4>
+                                <p>1个AI系统支持>100个项目并行分析</p>
+                                <div class="value-impact">服务规模 <strong>100x</strong></div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-card-icon">⭐</div>
+                                <h4>质量标准化</h4>
+                                <p>确保每个项目都得到高质量的问题分析</p>
+                                <div class="value-impact">服务一致性 <strong>100%</strong></div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-card-icon">🧠</div>
+                                <h4>经验沉淀</h4>
+                                <p>将优秀创业导师的经验结构化、可复制</p>
+                                <div class="value-impact">知识复用 <strong>∞</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 技术先进性 -->
+                    <div class="value-section">
+                        <h3 class="value-title">
+                            <span class="value-icon">🔬</span>
+                            技术先进性
+                        </h3>
+                        <div class="tech-grid">
+                            <div class="tech-card">
+                                <div class="tech-header">
+                                    <div class="tech-icon">🧵</div>
+                                    <h4>思维链推理</h4>
+                                </div>
+                                <p>业界领先的6阶段COT，确保推理质量</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">线性推理</span>
+                                    <span class="tech-tag">逻辑完整</span>
+                                </div>
+                            </div>
+                            <div class="tech-card">
+                                <div class="tech-header">
+                                    <div class="tech-icon">⚡</div>
+                                    <h4>并行优化</h4>
+                                </div>
+                                <p>15个检索任务并行执行，极致性能优化</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">并行处理</span>
+                                    <span class="tech-tag">性能极致</span>
+                                </div>
+                            </div>
+                            <div class="tech-card">
+                                <div class="tech-header">
+                                    <div class="tech-icon">🔗</div>
+                                    <h4>证据溯源</h4>
+                                </div>
+                                <p>每个结论都可追溯到具体文件和行号</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">可追溯</span>
+                                    <span class="tech-tag">可验证</span>
+                                </div>
+                            </div>
+                            <div class="tech-card">
+                                <div class="tech-header">
+                                    <div class="tech-icon">🔄</div>
+                                    <h4>双模态支持</h4>
+                                </div>
+                                <p>同时支持开放问题分析和结构化评估</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">灵活适配</span>
+                                    <span class="tech-tag">全场景</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="roi-section">
+                    <h3>投资回报预期</h3>
+                    <div class="roi-grid">
+                        <div class="roi-card">
+                            <div class="roi-value">10x</div>
+                            <div class="roi-label">决策效率提升</div>
+                        </div>
+                        <div class="roi-card">
+                            <div class="roi-value">100+</div>
+                            <div class="roi-label">并发项目支持</div>
+                        </div>
+                        <div class="roi-card">
+                            <div class="roi-value">95%+</div>
+                            <div class="roi-label">服务质量保证</div>
+                        </div>
+                        <div class="roi-card">
+                            <div class="roi-value">24/7</div>
+                            <div class="roi-label">全天候服务</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部信息 -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">
+                        <span class="brand-icon">🚀</span>
+                        <span class="brand-text">CC for MP AI Agent</span>
+                    </div>
+                    <p class="footer-description">
+                        智能创业导师AI Agent v10.0 (GOH作业3评估版)
+                    </p>
+                </div>
+                <div class="footer-meta">
+                    <div class="meta-item">
+                        <strong>系统版本:</strong> v10.0
+                    </div>
+                    <div class="meta-item">
+                        <strong>更新日期:</strong> 2025-10-15
+                    </div>
+                    <div class="meta-item">
+                        <strong>维护团队:</strong> CC-for-MiraclePlus Team
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="backToTop" class="back-to-top">
+        <i data-feather="chevron-up"></i>
+    </button>
+
+    <!-- JavaScript文件 -->
+    <script src="scripts/main.js"></script>
+    <script src="scripts/navigation.js"></script>
+    <script src="scripts/animations.js"></script>
+    <script src="scripts/diagrams.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>性能时序图</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+        .description {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ 6阶段执行时序图 - 性能优化</h1>
+        <div class="description">
+            <strong>极致性能优化</strong> - 6阶段线性执行，总响应时间控制在30秒内。Stage 3的并行检索是性能关键，占用50%的总时间，但通过15个检索任务并行执行来最大化效率。
+        </div>
+        <div class="mermaid">
+gantt
+    title 6阶段执行时序图 (总时长<30秒)
+    dateFormat X
+    axisFormat %s
+
+    section Stage 1
+    意图识别        :s1, 0, 5s
+    section Stage 2
+    框架映射        :s2, after s1, 3s
+    section Stage 3
+    并行检索        :s3, after s2, 15s
+    section Stage 4
+    分析构建        :s4, after s3, 5s
+    section Stage 5
+    输出生成        :s5, after s4, 3s
+    section Stage 6
+    文档保存        :s6, after s5, 2s
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            gantt: {
+                fontSize: 12,
+                sectionFontSize: 14,
+                numberSectionStyles: 4
+            }
+        });
+    </script>
+</body>
+</html>

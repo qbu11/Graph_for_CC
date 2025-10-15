@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能框架映射算法</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 1000px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+        .description {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 智能框架映射算法</h1>
+        <div class="description">
+            <strong>动态权重调整</strong> - 基于关键词权重、项目阶段和紧急度的智能评分，支持单框架、主辅框架、平衡分析等多种匹配模式。算法能够自动处理边界情况，确保每个问题都能得到合适的分析框架。
+        </div>
+        <div class="mermaid">
+flowchart TD
+    A[问题输入] --> B[关键词提取]
+    B --> C[基础评分]
+    C --> D[项目阶段识别]
+    D --> E[紧急度评估]
+    E --> F[动态权重调整]
+    F --> G{匹配度判断}
+
+    G -->|单框架领先| H[直接采用<br/>confidence=高]
+    G -->|多框架竞争| I[主辅框架模式<br/>confidence=中等]
+    G -->|权重分散| J[平衡分析模式<br/>建议分别分析]
+    G -->|无明显匹配| K[请求澄清<br/>提供选择菜单]
+
+    style A fill:#e3f2fd
+    style G fill:#fff3e0
+    style H fill:#e8f5e8
+    style I fill:#e8f5e8
+    style J fill:#fff9c4
+    style K fill:#ffebee
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#2d3748',
+                primaryBorderColor: '#4a5568',
+                lineColor: '#667eea',
+                secondaryColor: '#f7fafc',
+                tertiaryColor: '#e2e8f0'
+            }
+        });
+    </script>
+</body>
+</html>

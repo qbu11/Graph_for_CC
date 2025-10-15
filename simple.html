@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC for MP - AI Agent架构展示系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        /* 简化的CSS样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background: #f9fafb;
+        }
+
+        /* 加载屏幕 */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loading-logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translate3d(0, 0, 0);
+            }
+            40%, 43% {
+                transform: translate3d(0, -15px, 0);
+            }
+            70% {
+                transform: translate3d(0, -7px, 0);
+            }
+            90% {
+                transform: translate3d(0, -2px, 0);
+            }
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 主导航 */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e7eb;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #1f2937;
+        }
+
+        .brand-icon {
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+            background-color: #f3f4f6;
+        }
+
+        .nav-link.active {
+            color: #667eea;
+            background-color: rgba(102, 126, 234, 0.1);
+        }
+
+        /* 主内容 */
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 4rem 0;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* 英雄区域 */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        }
+
+        .hero-title {
+            font-size: 3.75rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Mermaid容器 - 大屏显示优化 */
+        .mermaid-container {
+            background: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            height: calc(100vh - 200px);
+            width: calc(100vw - 4rem);
+            max-width: none;
+        }
+
+        .mermaid {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 图表区域样式优化 */
+        .section {
+            min-height: 100vh;
+            padding: 2rem 0;
+            display: none;
+        }
+
+        .container {
+            max-width: none;
+            margin: 0;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Mermaid图表字体优化 */
+        .mermaid .node text,
+        .mermaid .edgeLabel text,
+        .mermaid .cluster text,
+        .mermaid text {
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .mermaid .node rect,
+        .mermaid .node circle,
+        .mermaid .node polygon {
+            stroke-width: 3px !important;
+        }
+
+        /* Gantt图表优化 */
+        .mermaid .section0, .mermaid .section1, .mermaid .section2, .mermaid .section3 {
+            font-size: 18px !important;
+            font-weight: 700 !important;
+        }
+
+        .mermaid .taskText0, .mermaid .taskText1, .mermaid .taskText2, .mermaid .taskText3 {
+            font-size: 16px !important;
+            font-weight: 600 !important;
+        }
+
+        /* 响应式字体 */
+        @media (min-width: 1400px) {
+            .mermaid .node text,
+            .mermaid .edgeLabel text,
+            .mermaid .cluster text,
+            .mermaid text {
+                font-size: 20px !important;
+            }
+
+            .mermaid .section0, .mermaid .section1, .mermaid .section2, .mermaid .section3 {
+                font-size: 22px !important;
+            }
+        }
+
+        @media (min-width: 1920px) {
+            .mermaid .node text,
+            .mermaid .edgeLabel text,
+            .mermaid .cluster text,
+            .mermaid text {
+                font-size: 24px !important;
+            }
+
+            .mermaid .section0, .mermaid .section1, .mermaid .section2, .mermaid .section3 {
+                font-size: 26px !important;
+            }
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            .hero-title {
+                font-size: 2.25rem;
+            }
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 加载动画 -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">🚀</div>
+            <div class="loading-text">CC for MP AI Agent</div>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- 主导航栏 -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-icon">🚀</span>
+                <span class="brand-text">CC for MP AI Agent</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active" data-target="home">概览</a>
+                <a href="#architecture" class="nav-link" data-target="architecture">系统架构</a>
+                <a href="#performance" class="nav-link" data-target="performance">性能优化</a>
+                <a href="#algorithm" class="nav-link" data-target="algorithm">智能算法</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 首页 -->
+        <section id="home" class="section active">
+            <div class="hero-section">
+                <div class="container">
+                    <h1 class="hero-title">
+                        <span class="gradient-text">CC for MP</span>
+                        <br>创始人问题分析系统
+                    </h1>
+                    <p class="hero-subtitle">
+                        基于6阶段思维链的智能创业导师AI Agent<br>
+                        为创始人提供结构化问题分析和精准决策支持
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="navigateToSection('architecture')">
+                            查看系统架构
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 系统架构 -->
+        <section id="architecture" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">🏗️ 系统架构总览</h2>
+                    <p class="section-subtitle">6阶段思维链驱动的智能分析系统</p>
+                </div>
+
+                <div class="mermaid-container">
+                    <div class="mermaid" id="architectureDiagram">
+                        <!-- 架构图将在这里渲染 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 性能优化 -->
+        <section id="performance" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">⚡ 性能优化设计</h2>
+                    <p class="section-subtitle">6阶段并行优化，30秒极致响应</p>
+                </div>
+
+                <div class="mermaid-container">
+                    <div class="mermaid" id="performanceDiagram">
+                        <!-- 性能时序图将在这里渲染 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 智能算法 -->
+        <section id="algorithm" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">🧠 智能框架映射算法</h2>
+                    <p class="section-subtitle">动态权重调整，智能匹配最佳分析框架</p>
+                </div>
+
+                <div class="mermaid-container">
+                    <div class="mermaid" id="algorithmDiagram">
+                        <!-- 算法流程图将在这里渲染 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 简化的JavaScript代码
+        let currentSection = 'home';
+
+        // 初始化Mermaid - 大屏显示优化
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#1a1a1a',
+                primaryBorderColor: '#4a5568',
+                lineColor: '#667eea',
+                secondaryColor: '#f7fafc',
+                tertiaryColor: '#e2e8f0',
+                background: '#ffffff',
+                mainBkg: '#ffffff',
+                secondBkg: '#f8f9fa',
+                // 增大字体和节点尺寸
+                nodeBorder: '3px',
+                clusterBkg: '#f8f9fa',
+                clusterBorder: '#667eea',
+                defaultLinkColor: '#667eea',
+                edgeLabelBackground: '#ffffff'
+            },
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'cardinal',
+                // 增大节点间距
+                nodeSpacing: 120,
+                rankSpacing: 150,
+                padding: 60
+            },
+            gantt: {
+                fontSize: 18,
+                sectionFontSize: 22,
+                numberSectionStyles: 4,
+                axisFormat: '%s',
+                gridLineStartPadding: 350,
+                fontFamily: 'Inter, sans-serif'
+            },
+            // 全局字体设置
+            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+            fontSize: '18px',
+            // 图表尺寸设置
+            maxTextSize: 90000,
+            maxWidth: 2000
+        });
+
+        // 图表定义 - 大屏显示优化
+        const diagrams = {
+            architecture: `
+graph TB
+    subgraph "输入层 Input Layer"
+        A1["🎯 问题分析模式<br/><b>项目名 + 创始人问题</b><br/>例：StudySpace 用户留存率低"]
+        A2["📊 GOH作业3评估模式<br/><b>项目名 + GOH作业3评估</b><br/>例：StudySpace GOH作业3评估"]
+    end
+
+    subgraph "6阶段思维链 COT Pipeline"
+        B1["🔍 Stage 1<br/><b>意图识别与问题拆解</b><br/>5W2H分析<br/>原子问题拆解<br/>意图类型识别"]
+        B2["🎯 Stage 2<br/><b>智能框架映射</b><br/>7框架智能匹配<br/>动态权重调整<br/>紧急度评估"]
+        B3["⚡ Stage 3<br/><b>统一信息检索</b><br/>并行执行<br/>多源数据整合<br/>OH1+QI会议记录"]
+        B4["🧠 Stage 4<br/><b>分析构建</b><br/>深层原因分析<br/>证据整合<br/>问题诊断"]
+        B5["📝 Stage 5<br/><b>智能输出生成</b><br/>3角度建议<br/>可执行路径<br/>风险预案"]
+        B6["💾 Stage 6<br/><b>报告文档保存</b><br/>自动存档<br/>MD格式<br/>时间戳命名"]
+    end
+
+    subgraph "信息层级结构"
+        C1["📋 申请表<br/>Apply"]
+        C2["🏢 创业营项目<br/>Incubation"]
+        C3["🎙️ OH1/QI会议记录<br/>Meeting Records"]
+        C4["📚 顶层方法论<br/>Frameworks"]
+        C5["📈 历史案例<br/>Cases"]
+    end
+
+    subgraph "7大分析框架"
+        D1["🎨 产品PMF"]
+        D2["💰 融资"]
+        D3["👥 团队"]
+        D4["🚀 GTM市场"]
+        D5["⚙️ 技术架构"]
+        D6["📊 运营管理"]
+        D7["⚖️ 财务法务"]
+    end
+
+    A1 --> B1
+    A2 --> B1
+    B1 --> B2
+    B2 --> B3
+    B3 --> B4
+    B4 --> B5
+    B5 --> B6
+
+    B2 -.-> D1
+    B2 -.-> D2
+    B2 -.-> D3
+    B2 -.-> D4
+    B2 -.-> D5
+    B2 -.-> D6
+    B2 -.-> D7
+
+    B3 --> C1
+    B3 --> C2
+    B3 --> C3
+    B3 --> C4
+    B3 --> C5
+
+    classDef inputBox fill:#e3f2fd,stroke:#1976d2,stroke-width:4px,color:#000
+    classDef stageBox fill:#f3e5f5,stroke:#7b1fa2,stroke-width:4px,color:#000
+    classDef dataBox fill:#e8f5e8,stroke:#388e3c,stroke-width:3px,color:#000
+    classDef frameworkBox fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#000
+
+    class A1,A2 inputBox
+    class B1,B2,B3,B4,B5,B6 stageBox
+    class C1,C2,C3,C4,C5 dataBox
+    class D1,D2,D3,D4,D5,D6,D7 frameworkBox
+            `,
+
+            performance: `
+gantt
+    title 6阶段执行时序图 (总时长<30秒)
+    dateFormat X
+    axisFormat %s
+
+    section 🔍 Stage 1
+    意图识别与问题拆解        :active, s1, 0, 5s
+    section 🎯 Stage 2
+    智能框架映射              :s2, after s1, 3s
+    section ⚡ Stage 3
+    并行信息检索              :crit, s3, after s2, 15s
+    section 🧠 Stage 4
+    分析构建                  :s4, after s3, 5s
+    section 📝 Stage 5
+    智能输出生成              :s5, after s4, 3s
+    section 💾 Stage 6
+    报告文档保存              :s6, after s5, 2s
+            `,
+
+            algorithm: `
+flowchart TD
+    A["🎯 问题输入<br/><b>创始人问题</b>"] --> B["🔍 关键词提取<br/><b>NLP分析</b>"]
+    B --> C["📊 基础评分<br/><b>框架匹配度</b>"]
+    C --> D["📈 项目阶段识别<br/><b>0-1 / 1-10 / 10-100</b>"]
+    D --> E["⚠️ 紧急度评估<br/><b>P0/P1/P2级别</b>"]
+    E --> F["⚖️ 动态权重调整<br/><b>阶段×紧急度</b>"]
+    F --> G{"🤔 匹配度判断<br/><b>智能路由</b>"}
+
+    G -->|单框架领先| H["✅ 直接采用<br/><b>confidence=高</b><br/>单一框架分析"]
+    G -->|多框架竞争| I["🔄 主辅框架模式<br/><b>confidence=中等</b><br/>主框架+辅助框架"]
+    G -->|权重分散| J["⚖️ 平衡分析模式<br/><b>建议分别分析</b><br/>多角度分析"]
+    G -->|无明显匹配| K["❓ 请求澄清<br/><b>提供选择菜单</b><br/>框架选择列表"]
+
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:4px
+    style G fill:#fff3e0,stroke:#f57c00,stroke-width:4px
+    style H fill:#e8f5e8,stroke:#4caf50,stroke-width:3px
+    style I fill:#e8f5e8,stroke:#4caf50,stroke-width:3px
+    style J fill:#fff9c4,stroke:#fbc02d,stroke-width:3px
+    style K fill:#ffebee,stroke:#f44336,stroke-width:3px
+            `
+        };
+
+        // 导航功能
+        function navigateToSection(sectionId) {
+            // 隐藏当前区域
+            document.getElementById(currentSection).classList.remove('active');
+
+            // 显示新区域
+            document.getElementById(sectionId).classList.add('active');
+            currentSection = sectionId;
+
+            // 更新导航状态
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-target') === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+
+            // 渲染图表
+            setTimeout(() => {
+                renderDiagram(sectionId);
+            }, 100);
+        }
+
+        // 渲染图表
+        function renderDiagram(sectionId) {
+            const container = document.getElementById(sectionId + 'Diagram');
+            if (!container || !diagrams[sectionId]) return;
+
+            container.innerHTML = '';
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = diagrams[sectionId];
+            container.appendChild(div);
+
+            mermaid.init(undefined, div);
+        }
+
+        // 页面加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 CC for MP AI Agent 系统初始化...');
+
+            // 初始化Feather图标
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
+
+            // 绑定导航事件
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('data-target');
+                    if (target) {
+                        navigateToSection(target);
+                    }
+                });
+            });
+
+            // 隐藏加载屏幕
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hidden');
+                console.log('✅ 系统加载完成');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
