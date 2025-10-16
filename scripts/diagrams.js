@@ -24,15 +24,15 @@ const mermaidConfig = {
     curve: 'linear'
   },
   gantt: {
-    fontSize: 13,
-    sectionFontSize: 15,
-    numberSectionStyles: 6,
-    barHeight: 45,
+    fontSize: 16,
+    sectionFontSize: 18,
+    numberSectionStyles: 1,
+    barHeight: 40,
     barGap: 12,
-    topPadding: 60,
-    leftPadding: 200,
-    gridLineStartPadding: 15,
-    useWidth: 2400
+    topPadding: 56,
+    leftPadding: 176,
+    gridLineStartPadding: 16,
+    useWidth: 1120
   }
 };
 
@@ -130,21 +130,21 @@ graph TB
   performance: `
 gantt
     title 6阶段执行时序图 (总时长<3分钟)
-    dateFormat X
-    axisFormat %s
+    dateFormat mm:ss
+    axisFormat %M:%S
 
     section Stage 1
-    意图识别与问题拆解: 5W2H分析 + 原子问题拆解        :s1, 0, 60s
+    意图识别 :s1, 00:00, 30s
     section Stage 2
-    智能框架映射: 7框架智能匹配 + 动态权重调整        :s2, after s1, 50s
+    框架映射 :s2, 00:30, 25s
     section Stage 3
-    统一信息检索: 并行执行 + 多源数据整合        :s3, after s2, 120s
+    并行检索 :s3, 00:55, 60s
     section Stage 4
-    分析构建: OH1+QI会议分析 + 深层原因分析        :s4, after s3, 50s
+    分析构建 :s4, 01:55, 25s
     section Stage 5
-    智能输出生成: 3角度建议 + 可执行路径        :s5, after s4, 40s
+    输出生成 :s5, 02:20, 20s
     section Stage 6
-    报告文档保存: 自动存档 + MD格式        :s6, after s5, 30s
+    文档保存 :s6, 02:40, 15s
   `,
 
   algorithm: `
