@@ -3,62 +3,36 @@
  * 处理Mermaid图表的初始化和渲染
  */
 
-// Mermaid配置 - 大屏显示优化
+// Mermaid配置
 const mermaidConfig = {
   startOnLoad: false,
   theme: 'default',
   themeVariables: {
     primaryColor: '#667eea',
-    primaryTextColor: '#1a1a1a',
+    primaryTextColor: '#2d3748',
     primaryBorderColor: '#4a5568',
     lineColor: '#667eea',
     secondaryColor: '#f7fafc',
     tertiaryColor: '#e2e8f0',
     background: '#ffffff',
     mainBkg: '#ffffff',
-    secondBkg: '#f8f9fa',
-    // 增大字体和节点尺寸
-    nodeBorder: '3px',
-    clusterBkg: '#f8f9fa',
-    clusterBorder: '#667eea',
-    defaultLinkColor: '#667eea',
-    edgeLabelBackground: '#ffffff'
+    secondBkg: '#f8f9fa'
   },
   flowchart: {
-    useMaxWidth: false,
+    useMaxWidth: true,
     htmlLabels: true,
-    curve: 'cardinal',
-    // 增大节点间距
-    nodeSpacing: 80,
-    rankSpacing: 100,
-    padding: 40
+    curve: 'linear'
   },
   gantt: {
-    fontSize: 16,
-    sectionFontSize: 20,
-    numberSectionStyles: 4,
-    axisFormat: '%s',
-    gridLineStartPadding: 350,
-    fontSize: 18,
-    fontFamily: 'Inter, sans-serif'
-  },
-  // 全局字体设置
-  fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
-  fontSize: '16px',
-  // 图表尺寸设置
-  maxTextSize: 90000,
-  maxWidth: 2000,
-  // 序列图设置
-  sequence: {
-    diagramMarginX: 50,
-    diagramMarginY: 30,
-    actorMargin: 80,
-    width: 200,
-    height: 65,
-    boxMargin: 10,
-    boxTextMargin: 5,
-    noteMargin: 10,
-    messageMargin: 35
+    fontSize: 13,
+    sectionFontSize: 15,
+    numberSectionStyles: 6,
+    barHeight: 45,
+    barGap: 12,
+    topPadding: 60,
+    leftPadding: 200,
+    gridLineStartPadding: 15,
+    useWidth: 2400
   }
 };
 
@@ -68,7 +42,6 @@ const diagramDefinitions = {
 graph TB
     subgraph "输入层 Input Layer"
         A1[问题分析模式<br/>项目名 + 创始人问题]
-        A2[GOH作业3评估模式<br/>项目名 + GOH作业3评估]
     end
 
     subgraph "6阶段思维链 COT Pipeline"
@@ -106,13 +79,11 @@ graph TB
 
     subgraph "输出层 Output Layer"
         F1[问题分析输出<br/>📍 OH1会议总结<br/>🎙️ QI核心意见<br/>📋 3角度建议选择]
-        F2[GOH作业3评估输出<br/>📊 自评分析<br/>🎯 路演目标评估<br/>📈 进展追踪判断]
         F3[自动存档<br/>📄 MD文档<br/>🕐 时间戳命名]
     end
 
     %% 连接线
     A1 --> B1
-    A2 --> B1
     B1 --> B2
     B2 --> B3
     B3 --> B4
@@ -138,7 +109,6 @@ graph TB
     E2 --> C5
 
     B5 --> F1
-    B5 --> F2
     B6 --> F3
 
     %% 样式
@@ -159,22 +129,22 @@ graph TB
 
   performance: `
 gantt
-    title 6阶段执行时序图 (总时长<30秒)
+    title 6阶段执行时序图 (总时长<3分钟)
     dateFormat X
     axisFormat %s
 
     section Stage 1
-    意图识别        :s1, 0, 5s
+    意图识别与问题拆解: 5W2H分析 + 原子问题拆解        :s1, 0, 60s
     section Stage 2
-    框架映射        :s2, after s1, 3s
+    智能框架映射: 7框架智能匹配 + 动态权重调整        :s2, after s1, 50s
     section Stage 3
-    并行检索        :s3, after s2, 15s
+    统一信息检索: 并行执行 + 多源数据整合        :s3, after s2, 120s
     section Stage 4
-    分析构建        :s4, after s3, 5s
+    分析构建: OH1+QI会议分析 + 深层原因分析        :s4, after s3, 50s
     section Stage 5
-    输出生成        :s5, after s4, 3s
+    智能输出生成: 3角度建议 + 可执行路径        :s5, after s4, 40s
     section Stage 6
-    文档保存        :s6, after s5, 2s
+    报告文档保存: 自动存档 + MD格式        :s6, after s5, 30s
   `,
 
   algorithm: `
@@ -329,5 +299,99 @@ function handleDiagramResize() {
 
 // 监听窗口大小变化
 window.addEventListener('resize', handleDiagramResize);
+
+// 图表放大功能
+function enlargeDiagram(diagramId) {
+  const originalDiagram = document.getElementById(diagramId);
+  const modal = document.getElementById('diagramModal');
+  const modalContent = document.getElementById('modalDiagramContent');
+
+  if (!originalDiagram || !modal || !modalContent) {
+    console.error('放大图表失败：找不到必要的元素');
+    return;
+  }
+
+  try {
+    // 清空模态框内容
+    modalContent.innerHTML = '';
+
+    // 获取图表定义
+    const diagramType = diagramId.replace('Diagram', '');
+    const definition = diagramDefinitions[diagramType];
+
+    if (!definition) {
+      console.error(`找不到图表定义: ${diagramType}`);
+      return;
+    }
+
+    // 为特定图表类型添加CSS类
+    modal.classList.remove('architecture-diagram', 'retrieval-diagram', 'algorithm-diagram');
+    if (diagramType === 'architecture') {
+      modal.classList.add('architecture-diagram');
+    } else if (diagramType === 'retrieval') {
+      modal.classList.add('retrieval-diagram');
+    } else if (diagramType === 'algorithm') {
+      modal.classList.add('algorithm-diagram');
+    }
+
+    // 创建新的图表元素
+    const newDiagram = document.createElement('div');
+    newDiagram.className = 'mermaid';
+    newDiagram.textContent = definition;
+
+    modalContent.appendChild(newDiagram);
+
+    // 显示模态框
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // 防止背景滚动
+
+    // 渲染图表
+    mermaid.init(undefined, newDiagram);
+
+    console.log(`✅ 图表放大成功: ${diagramType}`);
+  } catch (error) {
+    console.error(`❌ 图表放大失败: ${diagramType}`, error);
+  }
+}
+
+// 关闭图表模态框
+function closeDiagramModal() {
+  const modal = document.getElementById('diagramModal');
+  const modalContent = document.getElementById('modalDiagramContent');
+
+  if (modal) {
+    modal.classList.remove('active', 'architecture-diagram', 'retrieval-diagram', 'algorithm-diagram'); // 清理所有CSS类
+    document.body.style.overflow = ''; // 恢复背景滚动
+  }
+
+  if (modalContent) {
+    modalContent.innerHTML = ''; // 清空内容，释放内存
+  }
+
+  console.log('✅ 图表模态框已关闭');
+}
+
+// 点击模态框背景关闭
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('diagramModal');
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeDiagramModal();
+      }
+    });
+  }
+
+  // ESC键关闭模态框
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeDiagramModal();
+    }
+  });
+});
+
+// 使函数全局可用
+window.enlargeDiagram = enlargeDiagram;
+window.closeDiagramModal = closeDiagramModal;
 
 console.log('✅ diagrams.js 加载完成');

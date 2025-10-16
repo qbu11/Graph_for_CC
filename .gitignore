@@ -1,0 +1,20 @@
+# Claude Code configuration
+.claude/
+
+# Test files
+*-test.html
+canvas-test.html
+test-gantt.html
+
+# Node modules
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo

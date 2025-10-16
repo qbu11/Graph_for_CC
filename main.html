@@ -87,7 +87,7 @@
                     </p>
                     <div class="hero-stats">
                         <div class="stat-item">
-                            <div class="stat-number">&lt;30秒</div>
+                            <div class="stat-number">&lt;3分钟</div>
                             <div class="stat-label">响应时间</div>
                         </div>
                         <div class="stat-item">
@@ -130,7 +130,7 @@
                         <div class="feature-card" onclick="navigateToSection('performance')">
                             <div class="feature-icon">⚡</div>
                             <h3>极致性能</h3>
-                            <p>并行检索优化，30秒内完成复杂问题分析</p>
+                            <p>并行检索优化，3分钟内完成复杂问题分析</p>
                             <div class="feature-arrow">→</div>
                         </div>
                         <div class="feature-card" onclick="navigateToSection('algorithm')">
@@ -166,6 +166,11 @@
                 </div>
 
                 <div class="mermaid-container">
+                    <div class="diagram-controls">
+                        <button class="diagram-btn" onclick="enlargeDiagram('architectureDiagram')" title="放大查看">
+                            <i data-feather="maximize-2"></i>
+                        </button>
+                    </div>
                     <div class="mermaid" id="architectureDiagram">
                         <!-- 架构图将在这里渲染 -->
                     </div>
@@ -204,17 +209,22 @@
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">⚡ 性能优化设计</h2>
-                    <p class="section-subtitle">6阶段并行优化，30秒极致响应</p>
+                    <p class="section-subtitle">6阶段并行优化，3分钟极致响应</p>
                 </div>
 
                 <div class="performance-description">
                     <div class="description-card">
                         <h3>极致性能优化</h3>
-                        <p><strong>并行执行策略</strong> - 6阶段线性执行，总响应时间控制在30秒内。Stage 3的并行检索是性能关键，占用50%的总时间，但通过15个检索任务并行执行来最大化效率。</p>
+                        <p><strong>并行执行策略</strong> - 6阶段线性执行，总响应时间控制在3分钟内。Stage 3的并行检索是性能关键，占用50%的总时间，但通过15个检索任务并行执行来最大化效率。</p>
                     </div>
                 </div>
 
                 <div class="mermaid-container">
+                    <div class="diagram-controls">
+                        <button class="diagram-btn" onclick="enlargeDiagram('performanceDiagram')" title="放大查看">
+                            <i data-feather="maximize-2"></i>
+                        </button>
+                    </div>
                     <div class="mermaid" id="performanceDiagram">
                         <!-- 性能时序图将在这里渲染 -->
                     </div>
@@ -224,27 +234,39 @@
                     <div class="metric-grid">
                         <div class="metric-card">
                             <div class="metric-icon">🚀</div>
-                            <div class="metric-value">5秒</div>
-                            <div class="metric-label">意图识别</div>
-                            <div class="metric-description">5W2H分析 + 原子问题拆解</div>
+                            <div class="metric-value">35秒</div>
+                            <div class="metric-label">意图识别与问题拆解</div>
+                            <div class="metric-description">🔍 5W2H分析 + 原子问题拆解</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">🎯</div>
+                            <div class="metric-value">25秒</div>
+                            <div class="metric-label">智能框架映射</div>
+                            <div class="metric-description">🎯 7框架智能匹配 + ⚖️ 动态权重调整</div>
                         </div>
                         <div class="metric-card highlight">
                             <div class="metric-icon">⚡</div>
-                            <div class="metric-value">15秒</div>
-                            <div class="metric-label">并行检索</div>
-                            <div class="metric-description">15个检索任务同时执行</div>
+                            <div class="metric-value">85秒</div>
+                            <div class="metric-label">统一信息检索</div>
+                            <div class="metric-description">⚡ 并行执行 + 📊 多源数据整合</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-icon">🧠</div>
-                            <div class="metric-value">5秒</div>
+                            <div class="metric-value">30秒</div>
                             <div class="metric-label">分析构建</div>
-                            <div class="metric-description">OH1+QI会议分析</div>
+                            <div class="metric-description">🧠 OH1+QI会议分析 + 📈 深层原因分析</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-icon">📝</div>
-                            <div class="metric-value">5秒</div>
-                            <div class="metric-label">输出生成</div>
-                            <div class="metric-description">3角度建议 + 执行路径</div>
+                            <div class="metric-value">20秒</div>
+                            <div class="metric-label">智能输出生成</div>
+                            <div class="metric-description">📝 3角度建议 + ✅ 可执行路径</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">💾</div>
+                            <div class="metric-value">15秒</div>
+                            <div class="metric-label">报告文档保存</div>
+                            <div class="metric-description">💾 自动存档 + 📄 MD格式</div>
                         </div>
                     </div>
                 </div>
@@ -267,6 +289,11 @@
                 </div>
 
                 <div class="mermaid-container">
+                    <div class="diagram-controls">
+                        <button class="diagram-btn" onclick="enlargeDiagram('algorithmDiagram')" title="放大查看">
+                            <i data-feather="maximize-2"></i>
+                        </button>
+                    </div>
                     <div class="mermaid" id="algorithmDiagram">
                         <!-- 算法流程图将在这里渲染 -->
                     </div>
@@ -311,6 +338,11 @@
                 </div>
 
                 <div class="mermaid-container">
+                    <div class="diagram-controls">
+                        <button class="diagram-btn" onclick="enlargeDiagram('retrievalDiagram')" title="放大查看">
+                            <i data-feather="maximize-2"></i>
+                        </button>
+                    </div>
                     <div class="mermaid" id="retrievalDiagram">
                         <!-- 检索架构图将在这里渲染 -->
                     </div>
@@ -355,7 +387,7 @@
                             <div class="metric-icon">⚡</div>
                             <h3>性能指标</h3>
                         </div>
-                        <div class="metric-value">&lt;30秒</div>
+                        <div class="metric-value">&lt;3分钟</div>
                         <div class="metric-label">响应时间</div>
                         <div class="metric-progress">
                             <div class="progress-bar" style="width: 95%"></div>
@@ -451,7 +483,7 @@
                             <div class="value-card">
                                 <div class="value-card-icon">⚡</div>
                                 <h4>决策提速</h4>
-                                <p>30秒获得结构化分析，替代数小时的独立思考</p>
+                                <p>3分钟获得结构化分析，替代数小时的独立思考</p>
                                 <div class="value-impact">效率提升 <strong>10x</strong></div>
                             </div>
                             <div class="value-card">
@@ -609,6 +641,18 @@
     <button id="backToTop" class="back-to-top">
         <i data-feather="chevron-up"></i>
     </button>
+
+    <!-- 图表全屏模态框 -->
+    <div id="diagramModal" class="diagram-modal">
+        <div class="diagram-modal-content">
+            <button class="modal-close" onclick="closeDiagramModal()">
+                <i data-feather="x"></i>
+            </button>
+            <div id="modalDiagramContent">
+                <!-- 放大的图表将在这里显示 -->
+            </div>
+        </div>
+    </div>
 
     <!-- JavaScript文件 -->
     <script src="scripts/main.js"></script>

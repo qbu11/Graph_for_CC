@@ -105,21 +105,193 @@
   font-size: var(--font-size-lg);
 }
 
-/* Mermaid容器 */
+/* Mermaid容器 - 限制最大尺寸 */
 .mermaid-container {
   background: var(--white);
   border-radius: var(--radius-xl);
-  padding: var(--spacing-3xl);
-  margin: var(--spacing-3xl) 0;
+  padding: var(--spacing-xl);
+  margin: var(--spacing-2xl) auto; /* 居中显示 */
+  width: 100%;
+  max-width: 1600px; /* 限制最大宽度 */
   box-shadow: var(--shadow-lg);
-  overflow-x: auto;
+  overflow: auto; /* 确保容器可以滚动 */
   border: 1px solid var(--gray-200);
+  position: relative;
 }
 
 .mermaid {
   display: flex;
   justify-content: center;
-  min-height: 400px;
+  min-height: 800px; /* 增加基础高度 */
+  max-height: 1600px; /* 增加最大高度到1600px */
+  transform: scale(1.3); /* 适中的缩放比例 */
+  transform-origin: center;
+  padding: var(--spacing-xl);
+  width: 100%;
+  overflow: visible; /* 确保图表内容可见 */
+}
+
+/* 系统架构图特定样式 - 全屏优化 */
+#architectureDiagram .mermaid {
+  transform: scale(0.75); /* 适中缩放确保完整显示 */
+  overflow: visible; /* 确保内容可见 */
+  width: 100%;
+  height: auto;
+  min-height: 900px; /* 适当的最小高度 */
+  max-height: none; /* 移除高度限制，允许完整显示 */
+  padding: var(--spacing-lg); /* 增加内边距 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 架构图容器特殊设置 */
+#architectureDiagram {
+  min-height: 600px; /* 容器最小高度 */
+  max-height: none; /* 移除容器高度限制 */
+  overflow: visible; /* 确保容器内容可见 */
+}
+
+/* 全屏模态框中的系统架构图优化 */
+.diagram-modal.architecture-diagram .mermaid {
+  transform: scale(0.9); /* 提高缩放比例以更好显示 */
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: none; /* 移除高度限制 */
+  min-height: 90vh; /* 充分利用屏幕高度 */
+  overflow: visible; /* 确保内容完全可见 */
+  padding: var(--spacing-sm);
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 居中对齐 */
+}
+
+/* 系统架构图专用全屏模态框容器 */
+.diagram-modal.architecture-diagram .diagram-modal-content {
+  width: 98vw; /* 几乎全屏宽度，留出小边距 */
+  height: 98vh; /* 几乎全屏高度，留出小边距 */
+  max-width: none; /* 移除宽度限制 */
+  max-height: none; /* 移除高度限制 */
+  padding: var(--spacing-sm); /* 减少内边距 */
+  overflow: auto; /* 允许滚动 */
+  border-radius: var(--radius-md); /* 保持圆角但减小 */
+  margin: 1vh 1vw; /* 添加外边距确保不完全贴边 */
+}
+
+/* 检索架构和智能算法图表特定样式 - 缩小30% */
+#retrievalDiagram .mermaid,
+#algorithmDiagram .mermaid {
+  transform: scale(0.91); /* 比默认1.3缩小30% (1.3 * 0.7 = 0.91) */
+}
+
+/* 全屏模态框中的特定图表也相应缩小 */
+.diagram-modal #modalDiagramContent .mermaid {
+  transform: scale(1.6); /* 保持默认模态框缩放 */
+}
+
+/* 当模态框显示检索架构或算法图时的特殊处理 */
+.diagram-modal.retrieval-diagram .mermaid,
+.diagram-modal.algorithm-diagram .mermaid {
+  transform: scale(1.12); /* 全屏时也相应缩小30% (1.6 * 0.7 = 1.12) */
+}
+/* 图表放大按钮 */
+.diagram-controls {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  display: flex;
+  gap: var(--spacing-sm);
+  z-index: 100; /* 增加z-index确保按钮显示在最上层 */
+}
+
+.diagram-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; /* 增大按钮尺寸 */
+  height: 44px;
+  background: var(--white);
+  border: 2px solid var(--primary-color); /* 增加边框提高可见性 */
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-lg); /* 增强阴影 */
+}
+
+.diagram-btn:hover {
+  background: var(--primary-color);
+  color: var(--white);
+  box-shadow: var(--shadow-xl);
+  transform: scale(1.05); /* 悬停时轻微放大 */
+}
+
+.diagram-btn svg {
+  width: 22px; /* 增大图标尺寸 */
+  height: 22px;
+}
+
+/* 全屏模态框 - 限制尺寸 */
+.diagram-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: var(--z-modal);
+  backdrop-filter: blur(5px);
+}
+
+.diagram-modal.active {
+  display: flex;
+}
+
+.diagram-modal-content {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
+  width: 95vw;
+  height: 95vh;
+  max-width: 1800px; /* 增加最大宽度 */
+  max-height: 1800px; /* 增加模态框最大高度 */
+  overflow: auto;
+  position: relative;
+  box-shadow: var(--shadow-2xl);
+  margin: auto; /* 确保居中 */
+}
+
+.diagram-modal .mermaid {
+  transform: scale(1.6); /* 全屏时适度放大 */
+  min-height: 900px;
+  max-height: 1400px; /* 增加模态框内图表高度 */
+  width: 100%;
+}
+
+.modal-close {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  width: 40px;
+  height: 40px;
+  background: var(--error-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  z-index: 11;
+}
+
+.modal-close:hover {
+  background: #dc2626;
+  transform: scale(1.1);
 }
 
 /* 架构特性 */
@@ -713,6 +885,61 @@
   .roi-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  /* 移动端图表优化 */
+  .mermaid-container {
+    margin: var(--spacing-lg) auto; /* 移动端居中显示 */
+    padding: var(--spacing-md);
+    max-width: 100%; /* 移动端不超过屏幕宽度 */
+  }
+
+  .mermaid {
+    transform: scale(1.1); /* 移动端适中缩放 */
+    min-height: 600px;
+    max-height: 1200px; /* 移动端高度限制 */
+    padding: var(--spacing-md);
+  }
+
+  /* 移动端系统架构图特殊处理 */
+  #architectureDiagram .mermaid {
+    transform: scale(0.8); /* 移动端进一步缩小 */
+  }
+
+  .diagram-modal-content {
+    width: 95vw;
+    height: 95vh;
+    max-width: 100vw; /* 移动端最大宽度 */
+    max-height: 100vh; /* 移动端最大高度 */
+    padding: var(--spacing-sm);
+  }
+
+  .diagram-modal .mermaid {
+    transform: scale(1.3); /* 全屏时适中缩放 */
+    min-height: 600px;
+    max-height: 1000px;
+  }
+
+  /* 移动端系统架构图全屏优化 */
+  .diagram-modal.architecture-diagram .mermaid {
+    transform: scale(0.7); /* 移动端全屏时更小缩放 */
+    max-height: 90vh;
+    overflow: auto;
+  }
+
+  .diagram-controls {
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+  }
+
+  .diagram-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .diagram-btn svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -726,5 +953,39 @@
 
   .mermaid-container {
     padding: var(--spacing-lg);
+  }
+
+  /* 小屏幕图表进一步优化 */
+  .mermaid-container {
+    margin: var(--spacing-md) auto; /* 小屏幕居中显示 */
+    padding: var(--spacing-sm);
+    max-width: 100%; /* 不超过屏幕宽度 */
+  }
+
+  .mermaid {
+    transform: scale(1.0); /* 小屏幕合适缩放 */
+    min-height: 500px;
+    max-height: 1000px; /* 小屏幕高度限制 */
+    padding: var(--spacing-sm);
+  }
+
+  /* 小屏幕系统架构图特殊处理 */
+  #architectureDiagram .mermaid {
+    transform: scale(0.6); /* 小屏幕更小缩放 */
+    max-height: 800px;
+  }
+
+  .diagram-modal .mermaid {
+    transform: scale(1.2); /* 全屏时保持可读性 */
+    min-height: 400px;
+    max-height: 500px;
+  }
+
+  /* 小屏幕系统架构图全屏优化 */
+  .diagram-modal.architecture-diagram .mermaid {
+    transform: scale(0.5); /* 小屏幕全屏时极小缩放 */
+    max-height: 80vh;
+    overflow: auto;
+    padding: var(--spacing-xs);
   }
 }

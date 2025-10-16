@@ -236,98 +236,42 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        /* Mermaid容器 - 大屏显示优化 */
+        /* Mermaid容器 */
         .mermaid-container {
             background: white;
             border-radius: 1rem;
-            padding: 1rem;
-            margin: 1rem 0;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            height: calc(100vh - 200px);
-            width: calc(100vw - 4rem);
-            max-width: none;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
         }
 
         .mermaid {
-            width: 100%;
-            height: 100%;
             display: flex;
             justify-content: center;
-            align-items: center;
-        }
-
-        /* 图表区域样式优化 */
-        .section {
-            min-height: 100vh;
-            padding: 2rem 0;
-            display: none;
-        }
-
-        .container {
-            max-width: none;
-            margin: 0;
-            padding: 0 2rem;
-            width: 100%;
+            min-height: 400px;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 4rem;
         }
 
-        /* Mermaid图表字体优化 */
-        .mermaid .node text,
-        .mermaid .edgeLabel text,
-        .mermaid .cluster text,
-        .mermaid text {
-            font-size: 16px !important;
-            font-weight: 600 !important;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .mermaid .node rect,
-        .mermaid .node circle,
-        .mermaid .node polygon {
-            stroke-width: 3px !important;
-        }
-
-        /* Gantt图表优化 */
-        .mermaid .section0, .mermaid .section1, .mermaid .section2, .mermaid .section3 {
-            font-size: 18px !important;
-            font-weight: 700 !important;
-        }
-
-        .mermaid .taskText0, .mermaid .taskText1, .mermaid .taskText2, .mermaid .taskText3 {
-            font-size: 16px !important;
-            font-weight: 600 !important;
-        }
-
-        /* 响应式字体 */
-        @media (min-width: 1400px) {
-            .mermaid .node text,
-            .mermaid .edgeLabel text,
-            .mermaid .cluster text,
-            .mermaid text {
-                font-size: 20px !important;
-            }
-
-            .mermaid .section0, .mermaid .section1, .mermaid .section2, .mermaid .section3 {
-                font-size: 22px !important;
-            }
-        }
-
-        @media (min-width: 1920px) {
-            .mermaid .node text,
-            .mermaid .edgeLabel text,
-            .mermaid .cluster text,
-            .mermaid text {
-                font-size: 24px !important;
-            }
-
-            .mermaid .section0, .mermaid .section1, .mermaid .section2, .mermaid .section3 {
-                font-size: 26px !important;
-            }
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         /* 响应式 */
@@ -447,86 +391,36 @@
         // 简化的JavaScript代码
         let currentSection = 'home';
 
-        // 初始化Mermaid - 大屏显示优化
+        // 初始化Mermaid
         mermaid.initialize({
             startOnLoad: false,
             theme: 'default',
             themeVariables: {
                 primaryColor: '#667eea',
-                primaryTextColor: '#1a1a1a',
+                primaryTextColor: '#2d3748',
                 primaryBorderColor: '#4a5568',
                 lineColor: '#667eea',
                 secondaryColor: '#f7fafc',
-                tertiaryColor: '#e2e8f0',
-                background: '#ffffff',
-                mainBkg: '#ffffff',
-                secondBkg: '#f8f9fa',
-                // 增大字体和节点尺寸
-                nodeBorder: '3px',
-                clusterBkg: '#f8f9fa',
-                clusterBorder: '#667eea',
-                defaultLinkColor: '#667eea',
-                edgeLabelBackground: '#ffffff'
-            },
-            flowchart: {
-                useMaxWidth: false,
-                htmlLabels: true,
-                curve: 'cardinal',
-                // 增大节点间距
-                nodeSpacing: 120,
-                rankSpacing: 150,
-                padding: 60
-            },
-            gantt: {
-                fontSize: 18,
-                sectionFontSize: 22,
-                numberSectionStyles: 4,
-                axisFormat: '%s',
-                gridLineStartPadding: 350,
-                fontFamily: 'Inter, sans-serif'
-            },
-            // 全局字体设置
-            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
-            fontSize: '18px',
-            // 图表尺寸设置
-            maxTextSize: 90000,
-            maxWidth: 2000
+                tertiaryColor: '#e2e8f0'
+            }
         });
 
-        // 图表定义 - 大屏显示优化
+        // 图表定义
         const diagrams = {
             architecture: `
 graph TB
     subgraph "输入层 Input Layer"
-        A1["🎯 问题分析模式<br/><b>项目名 + 创始人问题</b><br/>例：StudySpace 用户留存率低"]
-        A2["📊 GOH作业3评估模式<br/><b>项目名 + GOH作业3评估</b><br/>例：StudySpace GOH作业3评估"]
+        A1[问题分析模式<br/>项目名 + 创始人问题]
+        A2[GOH作业3评估模式<br/>项目名 + GOH作业3评估]
     end
 
     subgraph "6阶段思维链 COT Pipeline"
-        B1["🔍 Stage 1<br/><b>意图识别与问题拆解</b><br/>5W2H分析<br/>原子问题拆解<br/>意图类型识别"]
-        B2["🎯 Stage 2<br/><b>智能框架映射</b><br/>7框架智能匹配<br/>动态权重调整<br/>紧急度评估"]
-        B3["⚡ Stage 3<br/><b>统一信息检索</b><br/>并行执行<br/>多源数据整合<br/>OH1+QI会议记录"]
-        B4["🧠 Stage 4<br/><b>分析构建</b><br/>深层原因分析<br/>证据整合<br/>问题诊断"]
-        B5["📝 Stage 5<br/><b>智能输出生成</b><br/>3角度建议<br/>可执行路径<br/>风险预案"]
-        B6["💾 Stage 6<br/><b>报告文档保存</b><br/>自动存档<br/>MD格式<br/>时间戳命名"]
-    end
-
-    subgraph "信息层级结构"
-        C1["📋 申请表<br/>Apply"]
-        C2["🏢 创业营项目<br/>Incubation"]
-        C3["🎙️ OH1/QI会议记录<br/>Meeting Records"]
-        C4["📚 顶层方法论<br/>Frameworks"]
-        C5["📈 历史案例<br/>Cases"]
-    end
-
-    subgraph "7大分析框架"
-        D1["🎨 产品PMF"]
-        D2["💰 融资"]
-        D3["👥 团队"]
-        D4["🚀 GTM市场"]
-        D5["⚙️ 技术架构"]
-        D6["📊 运营管理"]
-        D7["⚖️ 财务法务"]
+        B1[Stage 1<br/>意图识别与问题拆解]
+        B2[Stage 2<br/>智能框架映射]
+        B3[Stage 3<br/>统一信息检索]
+        B4[Stage 4<br/>分析构建]
+        B5[Stage 5<br/>智能输出生成]
+        B6[Stage 6<br/>报告文档保存]
     end
 
     A1 --> B1
@@ -537,71 +431,51 @@ graph TB
     B4 --> B5
     B5 --> B6
 
-    B2 -.-> D1
-    B2 -.-> D2
-    B2 -.-> D3
-    B2 -.-> D4
-    B2 -.-> D5
-    B2 -.-> D6
-    B2 -.-> D7
-
-    B3 --> C1
-    B3 --> C2
-    B3 --> C3
-    B3 --> C4
-    B3 --> C5
-
-    classDef inputBox fill:#e3f2fd,stroke:#1976d2,stroke-width:4px,color:#000
-    classDef stageBox fill:#f3e5f5,stroke:#7b1fa2,stroke-width:4px,color:#000
-    classDef dataBox fill:#e8f5e8,stroke:#388e3c,stroke-width:3px,color:#000
-    classDef frameworkBox fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#000
+    classDef inputBox fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef stageBox fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
 
     class A1,A2 inputBox
     class B1,B2,B3,B4,B5,B6 stageBox
-    class C1,C2,C3,C4,C5 dataBox
-    class D1,D2,D3,D4,D5,D6,D7 frameworkBox
             `,
 
             performance: `
 gantt
-    title 6阶段执行时序图 (总时长<30秒)
+    title 6阶段执行时序图
     dateFormat X
     axisFormat %s
 
-    section 🔍 Stage 1
-    意图识别与问题拆解        :active, s1, 0, 5s
-    section 🎯 Stage 2
-    智能框架映射              :s2, after s1, 3s
-    section ⚡ Stage 3
-    并行信息检索              :crit, s3, after s2, 15s
-    section 🧠 Stage 4
-    分析构建                  :s4, after s3, 5s
-    section 📝 Stage 5
-    智能输出生成              :s5, after s4, 3s
-    section 💾 Stage 6
-    报告文档保存              :s6, after s5, 2s
+    section Stage 1
+    意图识别        :s1, 0, 5s
+    section Stage 2
+    框架映射        :s2, after s1, 3s
+    section Stage 3
+    并行检索        :s3, after s2, 15s
+    section Stage 4
+    分析构建        :s4, after s3, 5s
+    section Stage 5
+    输出生成        :s5, after s4, 3s
+    section Stage 6
+    文档保存        :s6, after s5, 2s
             `,
 
             algorithm: `
 flowchart TD
-    A["🎯 问题输入<br/><b>创始人问题</b>"] --> B["🔍 关键词提取<br/><b>NLP分析</b>"]
-    B --> C["📊 基础评分<br/><b>框架匹配度</b>"]
-    C --> D["📈 项目阶段识别<br/><b>0-1 / 1-10 / 10-100</b>"]
-    D --> E["⚠️ 紧急度评估<br/><b>P0/P1/P2级别</b>"]
-    E --> F["⚖️ 动态权重调整<br/><b>阶段×紧急度</b>"]
-    F --> G{"🤔 匹配度判断<br/><b>智能路由</b>"}
+    A[问题输入] --> B[关键词提取]
+    B --> C[基础评分]
+    C --> D[项目阶段识别]
+    D --> E[紧急度评估]
+    E --> F[动态权重调整]
+    F --> G{匹配度判断}
 
-    G -->|单框架领先| H["✅ 直接采用<br/><b>confidence=高</b><br/>单一框架分析"]
-    G -->|多框架竞争| I["🔄 主辅框架模式<br/><b>confidence=中等</b><br/>主框架+辅助框架"]
-    G -->|权重分散| J["⚖️ 平衡分析模式<br/><b>建议分别分析</b><br/>多角度分析"]
-    G -->|无明显匹配| K["❓ 请求澄清<br/><b>提供选择菜单</b><br/>框架选择列表"]
+    G -->|单框架领先| H[直接采用]
+    G -->|多框架竞争| I[主辅框架模式]
+    G -->|权重分散| J[平衡分析模式]
 
-    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:4px
-    style G fill:#fff3e0,stroke:#f57c00,stroke-width:4px
-    style H fill:#e8f5e8,stroke:#4caf50,stroke-width:3px
-    style I fill:#e8f5e8,stroke:#4caf50,stroke-width:3px
-    style J fill:#fff9c4,stroke:#fbc02d,stroke-width:3px
-    style K fill:#ffebee,stroke:#f44336,stroke-width:3px
+    style A fill:#e3f2fd
+    style G fill:#fff3e0
+    style H fill:#e8f5e8
+    style I fill:#e8f5e8
+    style J fill:#fff9c4
             `
         };
 
